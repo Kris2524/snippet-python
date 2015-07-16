@@ -1,19 +1,21 @@
 __author__ = 'Ryan Ahn'
 
 
-from os import listdir, path
+from os import listdir
+import os.path
 
 import tf_idf
 import fileio
 
 if __name__ == "__main__":
     path = r"D:\Workspace\Git\snippet-python\tm\data\alices_adventures_in_wonderland.txt"
-    doc_path = r"D:\Workspace\Git\snippet-python\tm\data"
+    doc_path = r"D:\Workspace\Git\snippet-python\tm\data\\"
 
     file_list = listdir(doc_path)
 
     for f in file_list:
-        extension = path.splitext(f)[1]
+        print (f)
+        extension = os.path.splitext(f)[1]
         if extension != ".txt":
             continue
 
