@@ -3,18 +3,20 @@ __author__ = 'Ryan Ahn'
 from collections import OrderedDict
 from os import listdir
 from math import log
+import operator
 
 import ngram
 import fileio
 
 
 def tf_value(dictionary, word):
-    return dictionary[word] / len(dictionary)
+    ret_tf_value = dictionary[word] / float(len(dictionary))
+    return ret_tf_value
 
 
 def tf_analyze(path):
     text = fileio.read_file(path)
-    dictionary = ngram.wordgram_analyze(text)
+    dictionary = ngram.wordgram_analyze(str.lower(text))
     tf_dict = OrderedDict()
 
     for k, v in dictionary.items():
@@ -33,14 +35,15 @@ def idf_value(dirpath, dict_map, word):
             word_count += 1
     if word_count is 0:
         word_count = 1
-    return log(len(fil_list)/word_count)
+    ret_value = log(len(fil_list)/word_count)
+    return ret_value
 
 
 def idf_analyze(dirpath, path):
     dict_map = ngram.wordgram_map(dirpath)
     contents = fileio.read_file(path)
 
-    dict_file = ngram.wordgram_analyze(contents)
+    dict_file = ngram.wordgram_analyze(str.lower(contents))
     dict_idf = OrderedDict()
     for dict_elm in dict_file.keys():
         dict_idf[dict_elm] = idf_value(dirpath, dict_map, dict_elm)
